@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.ss.lookbook.lookbookMapper">
+	<insert id="insertLbNum" parameterType="int">
+		insert into lookbook(lb_posts_num) values(seq_lookbook.nextval)
+	</insert>
+	
+	<select id="selectLbNum" resultType="String">
+		SELECT lb_posts_num
+		FROM(
+ 		   SELECT 
+     		   lb_posts_num
+  		  FROM lookbook
+  		  ORDER BY ROWNUM DESC)
+		 WHERE ROWNUM = 1
+	</select>
+	
+
+	
+	<!-- lb_Img 추가 -->
+		<insert id="insertLbImg" parameterType="kr.co.ss.lookbook.vo.FileUploadVO">
+		insert into LB_IMG(LB_POSTS_NUM,IMG, REGDATE) values(#{lb_posts_num}, #{img}, sysdate)
+	</insert>
+	
+	
+	<!-- update게시판 -->
+	<update id ="insertUpdateLb" parameterType="kr.co.ss.lookbook.vo.InsertUpdateLbVO">
+		update lookbook set member_id = #{member_id}, lb_title = #{lb_title}, lb_write_date = sysdate, lb_contents= #{lb_contents}
+		where lb_posts_num = ${lb_posts_num}
+	</update>
+	
+	<!-- 게시글 작성할때 취소누르면 게시글 번호와 게시글 이미지 삭제 -->
+	<delete id="deleteLbImgNum" parameterType="Integer">
+		delete from lb_img where lb_posts_num = #{lb_posts_num}
+	</delete>
+	
+	<select id="selectLbImgCnt" resultType="Integer" parameterType="Integer">
+		select count(*) from lb_img where lb_posts_num = #{lb_posts_num}	
+		
+	</select>
+	<delete id="deleteLbNum" parameterType="Integer">
+		delete from lookbook where lb_posts_num = #{lb_posts_num}
+	</delete>
+</mapper>
