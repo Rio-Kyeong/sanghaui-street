@@ -16,7 +16,7 @@
 ![CLASS](https://github.com/RyuKyeongWoo/spring_web_team-project/blob/main/image/classDiagram.png)
 
 ## Code
-* **Model&Controller** : [https://github.com/RyuKyeongWoo/spring_web_team_project/tree/main/java/kr/co/ss/member](https://github.com/RyuKyeongWoo/spring_web_team_project/tree/main/java/kr/co/ss/member)<br/>
+* **Model&Controller** : [kr.co.ss.member](https://github.com/RyuKyeongWoo/spring_web_team_project/tree/main/java/kr/co/ss/member)<br/>
 ![MC](https://github.com/RyuKyeongWoo/spring_web_team-project/blob/main/image/Model-Controller.PNG)<br/>
-* **View** : [https://github.com/RyuKyeongWoo/spring_web_team_project/tree/main/views/prj3/login](https://github.com/RyuKyeongWoo/spring_web_team_project/tree/main/views/prj3/login)<br/>
+* **View** : [views.prj3.login](https://github.com/RyuKyeongWoo/spring_web_team_project/tree/main/views/prj3/login)<br/>
 ![V](https://github.com/RyuKyeongWoo/spring_web_team-project/blob/main/image/view.PNG)<br/>
