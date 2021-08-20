@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.ss.order.mapper">
+
+	<!-- 메인창에서 구매내역 -->
+	<select id="selectOrder" resultType="kr.co.ss.order.domain.OrderDetailDomain" parameterType="String">
+		select a.ORDER_NUM, a.PROD_NUM, b.PROD_NAME, a.ORDER_SIZE, a.ORDER_PRICE, a.ORDER_QUANTITY 
+		from ORDER_DETAILS a, PRODUCT b
+		where a.MEMBER_ID= #{ member_id } and a.PROD_NUM = b.PROD_NUM
+	</select>
+	
+	<!-- 주문버튼누르면 보여지는 구매내역 -->
+	<select id="selectinfoOrder" resultType="kr.co.ss.order.domain.OrderInfoDomain" parameterType="String">
+		select a.PROD_NUM, b.PROD_NAME, a.ORDER_SIZE, a.ORDER_PRICE, a.ORDER_QUANTITY , b.PROD_IMAGE
+		from ORDER_DETAILS a, PRODUCT b
+		where a.MEMBER_ID= #{ member_id } and a.PROD_NUM = b.PROD_NUM
+	</select>
+	
+	<!-- 주문 insert -->
+	<insert id="insertOrder" parameterType="kr.co.ss.order.vo.OrderInsertVO">
+		insert into order_details(ORDER_NUM, MEMBER_ID, PROD_NUM, ORDER_SIZE, ORDER_PRICE, ORDER_QUANTITY) 
+		values (NO_SEQ.nextval, #{ member_id },#{ prod_num },#{ order_size },#{ order_price },#{ order_quantity })
+	</insert>
+	
+	<!-- <select id="insertSelectOrder" resultType="kr.co.ss.order.vo.OrderDetailVO" parameterType="String">
+		select a.ORDER_NUM, a.PROD_NUM, b.PROD_IMG, b.PROD_NAME, a.ORDER_SIZE, a.ORDER_PRICE, a.ORDER_QUANTITY 
+		from ORDER_DETAILS a, PRODUCT b 
+		where a.ORDER_NUM = (select max(order_num) from order_details where member_id = #{ Member_id } )
+		and a.PROD_NUM = b.PROD_NUM
+	</select> -->
+</mapper>

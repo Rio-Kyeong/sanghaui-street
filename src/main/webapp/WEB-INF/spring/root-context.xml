@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    <!--  파일업로드 용량 (7MB)-->
+    <property name="maxUploadSize" value="7340032"/>
+    <property name="defaultEncoding" value="UTF-8" />
+  </bean>
+  
+  <!-- lookbook 파일업로드 디렉토리 설정 -->
+  <bean id="uploadPath" class="java.lang.String">
+    <constructor-arg value="C:/dev/workspace/team_prj3/src/main/webapp/resources/upload/"/>
+  </bean>
+  
+  
+		
+		
+</beans>

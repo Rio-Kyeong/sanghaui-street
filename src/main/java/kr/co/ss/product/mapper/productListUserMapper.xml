@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.ss.product.productListUserMapper">
+	<!-- 조회되는 컬럼과 setter method를 미리 매핑 -->
+	<resultMap type="kr.co.ss.product.domain.ProductListUserDomain" id="pludResult">
+	<result column="prod_image" property="prod_image"/>
+	<result column="prod_num" property="prod_num"/>
+	</resultMap>
+	
+	
+	<!-- 쿼리문 작성 : 상품 상의 목록에 뿌려줄거임 -->
+	<select id="productListTopUser" resultMap="pludResult">
+	select		prod_image, prod_num
+	from		product
+	where		prod_cat='상의'
+	order by	prod_num desc
+	</select>
+	
+	<!-- 쿼리문 작성 : 상품 하의 목록에 뿌려줄거임 -->
+	<select id="productListBotUser" resultMap="pludResult">
+	select		prod_image, prod_num
+	from		product
+	where		prod_cat='하의'
+	order by	prod_num desc
+	</select>
+	
+	
+	
+	
+	
+</mapper>

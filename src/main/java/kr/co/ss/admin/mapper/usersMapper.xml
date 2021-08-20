@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.ss.admin.usersMapper">
+
+<!-- 회원목록 -->
+<select id="usersList" resultType="kr.co.ss.admin.domain.AdminUsersDomain">
+select	member_id,member_name,member_gender,member_sign_date,member_withdrawal
+from	member
+</select>
+
+<!-- 회원정보 -->
+<select id="userInfo" resultType="kr.co.ss.admin.domain.AdminUserInfoDomain" parameterType="String">
+select	member_id,member_name,member_gender,member_birth,member_phone,member_email,member_zipcode,member_detailed_addr,member_sign_date,member_withdrawal
+from	member
+where	member_id=#{member_id}
+</select>
+
+<!-- 유저탈퇴 -->
+<update id="deleteUser" parameterType="kr.co.ss.admin.vo.UserDeleteVO">
+update member
+set member_withdrawal=#{member_withdrawal}
+where member_id=#{member_id}
+</update>
+
+
+</mapper>

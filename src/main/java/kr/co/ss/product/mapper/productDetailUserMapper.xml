@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.ss.product.productDetailUserMapper">
+	
+	<!-- 조회되는 컬럼과 setter method를 미리 매핑 -->
+<!--  	<resultMap type="kr.co.ss.domain.ProductDetailUserDomain" id="pdudResult">
+	<result column="prod_name" property="prod_name"/>
+	<result column="prod_price" property="prod_price"/>
+	<result column="prod_explain" property="prod_explain"/>
+	<result column="prod_img" property="prod_img"/>
+	</resultMap>  -->
+	
+	
+	<!-- 쿼리문 작성 : 상품 상세 페이지에 뿌려줄거임 -->
+	<select id="productDetailUser" resultType="kr.co.ss.product.domain.ProductDetailUserDomain" parameterType="Integer">
+		select		prod_num, prod_name, prod_price, prod_explain, prod_image
+		from		product
+		where		prod_num = #{prod_num}
+	</select>
+	
+</mapper>
