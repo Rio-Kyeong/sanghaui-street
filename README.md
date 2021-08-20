@@ -34,7 +34,7 @@
 ## Entity-Relationship Diagram
 ![ERD](https://github.com/RyuKyeongWoo/spring_web_team-project/blob/main/image/ERD.png)
 
-## Login Class Diagram
+## 사용자(Member) Class Diagram
 ![CLASS](https://github.com/RyuKyeongWoo/spring_web_team-project/blob/main/image/ClassDiagram.png)
 
 ## 사용자(Member) 구현 내용
