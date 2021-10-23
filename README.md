@@ -1,6 +1,6 @@
-# spring_web_team-project
+# SANGHAUI STREET Web Shopping mall
 
-**Spring Framework를 이용한 패션 쇼핑몰 웹 페이지 구현 팀 프로젝트**
+**Spring Framework, MyBatis를 이용한 패션 쇼핑몰 웹 페이지 구현 팀 프로젝트**
 
 사용자들이 직접 회원가입을 통해 로그인 후 상품구매, 게시판 작성을 할 수 있으며,<br/>
 관리자 페이지를 통해 상품, 게시글, 회원을 관리할 수 있는 웹 쇼핑몰 구현
