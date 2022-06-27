@@ -3,11 +3,13 @@ package kr.co.ss.product.dao;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.stereotype.Repository;
 
 import kr.co.ss.connection.MyBatisHandler;
 import kr.co.ss.product.domain.ProductDetailUserDomain;
 import kr.co.ss.product.domain.ProductListUserDomain;
 
+@Repository
 public class ProductDAO {
 
 	public ProductDAO() {

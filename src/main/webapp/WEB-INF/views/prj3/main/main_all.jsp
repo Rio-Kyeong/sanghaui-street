@@ -1,8 +1,7 @@
 <%-- <%@page import="kr.co.ss.product.domain.ProductListUserDomain"%>
 <%@page import="kr.co.ss.product.dao.ProductDAO"%> --%>
 <%@page import="java.util.List"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
@@ -19,17 +18,15 @@
 <!-- jQuery CDN(Contents Delivery Network) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 
-   <title>상하의STREET</title>
+<title>상하의STREET</title>
 <script type="text/javascript">
 function logout(){
-     if( confirm("정말 로그아웃 하시겠습니까?")){
+     if(confirm("정말 로그아웃 하시겠습니까?")){
      	location.href="http://localhost/ss/login/logout.do";
 	}
 }
 </script>
 <style>
-
-
 .header{
 	z-index: 1;
 }

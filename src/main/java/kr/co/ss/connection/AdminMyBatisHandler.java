@@ -9,7 +9,6 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 public class AdminMyBatisHandler {
-	
 	private static AdminMyBatisHandler mbh;
 	private static SqlSessionFactory ssf;
 	

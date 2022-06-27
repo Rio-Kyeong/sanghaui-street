@@ -1,10 +1,7 @@
 package kr.co.ss.member.controller;
 
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class PopupController {
@@ -13,7 +10,7 @@ public class PopupController {
 	 * 실패 팝업창
 	 * @return
 	 */
-	@RequestMapping(value = "/login/fail.do", method = GET)
+	@GetMapping(value = "/login/fail.do")
 	public String loginFailPopup() {
 		
 		return "prj3/login/process/fail";
@@ -23,7 +20,7 @@ public class PopupController {
 	 * 비밀번호 변경실패 팝업창
 	 * @return
 	 */
-	@RequestMapping(value = "/login/password_fail.do", method = GET)
+	@GetMapping(value = "/login/password_fail.do")
 	public String pwFailPopup() {
 		
 		return "prj3/login/process/member_fail";
@@ -33,7 +30,7 @@ public class PopupController {
 	 * 비밀번호 변경성공 팝업창
 	 * @return
 	 */
-	@RequestMapping(value = "/login/password_success.do", method = GET)
+	@GetMapping(value = "/login/password_success.do")
 	public String pwSuccessPopup() {
 		
 		return "prj3/login/process/password_update";
@@ -43,7 +40,7 @@ public class PopupController {
 	 * 회원정보 변경성공 팝업창
 	 * @return
 	 */
-	@RequestMapping(value = "/login/member_success.do", method = GET)
+	@GetMapping(value = "/login/member_success.do")
 	public String memberSuccessPopup() {
 		
 		return "prj3/login/process/member_update";
@@ -53,7 +50,7 @@ public class PopupController {
 	 * 회원탈퇴 팝업창
 	 * @return
 	 */
-	@RequestMapping(value = "/login/withdrawal_success.do", method = GET)
+	@GetMapping(value = "/login/withdrawal_success.do")
 	public String withdrawalPopup() {
 		
 		return "prj3/login/process/member_secession";
@@ -63,7 +60,7 @@ public class PopupController {
 	 * 화원가입 중복확인
 	 * @return
 	 */
-	@RequestMapping(value = "/login/idCheck.do", method = GET)
+	@GetMapping(value = "/login/idCheck.do")
 	public String idCheckPopup() {
 		
 		return "prj3/login/process/id_check";
@@ -73,7 +70,7 @@ public class PopupController {
 	 * 아이디 찾기 성공
 	 * @return
 	 */
-	@RequestMapping(value = "/login/idFindSuccess.do", method = GET)
+	@GetMapping(value = "/login/idFindSuccess.do")
 	public String idFindSuccessPopup() {
 
 		return "prj3/login/process/id_find";
@@ -83,12 +80,9 @@ public class PopupController {
 	 * 비밀번호 찾기 성공
 	 * @return
 	 */
-	@RequestMapping(value = "/login/pwFindSuccess.do", method = GET)
+	@GetMapping(value = "/login/pwFindSuccess.do")
 	public String pwFindSuccessPopup() {
 
 		return "prj3/login/process/pw_find";
 	}
-	
-	
-
 }

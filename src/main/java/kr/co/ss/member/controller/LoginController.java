@@ -3,7 +3,10 @@ package kr.co.ss.member.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
@@ -20,23 +23,24 @@ import kr.co.ss.member.vo.PasswordUpdateVO;
 import kr.co.ss.member.vo.SearchIdVO;
 import kr.co.ss.member.vo.SearchPwVO;
 
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
-
 import javax.servlet.http.HttpSession;
 
 @Controller
 @SessionAttributes({"id","adminId"})
 public class LoginController {
 	
-	@Autowired
 	private MemberService ms;
 	
+	@Autowired
+	public LoginController(MemberService ms) {
+		this.ms = ms;
+	}
+
 	/**
 	 * 로그인 페이지 이동
 	 * @return
 	 */
-	@RequestMapping(value = "/login/login.do")
+	@GetMapping(value = "/login/login.do")
 	public String loginForm() {
 		
 		return "prj3/login/login";
@@ -46,21 +50,23 @@ public class LoginController {
 	 * 로그인
 	 * @return
 	 */
-	@RequestMapping(value = "/login/loginTry.do")
+	@PostMapping(value="/login/loginTry.do")
 	public String loginProcess(LoginVO lVO, Model model) {
 		
 		String url = "";
 
-		LoginInfoDomain lid = ms.searchLogin(lVO);
+		LoginInfoDomain lid = new LoginInfoDomain();
+		
+		lid = ms.searchLogin(lVO);
 
 		if(lid == null || lid.getMember_withdrawal().equals("Y")){
 			model.addAttribute("loginFail","loginFail"); //만약 login 정보가 없거나 탈퇴 정보가 Y이면
 			url = "prj3/login/login";
-		}else {			
+		}else {
 			String id = lid.getMember_id();
-			model.addAttribute("id", id);//session
+			model.addAttribute("id", id); //session
 			url = "forward:/main/main_all.do"; //forward를 이용해서 main페이지로 이동
-		}	
+		}
 		return url;
 	}
 	
@@ -69,7 +75,7 @@ public class LoginController {
 	 * @param ss
 	 * @return
 	 */
-	@RequestMapping(value = "/login/logout.do")
+	@GetMapping(value = "/login/logout.do")
 	public String logoutProcess(SessionStatus ss) {
 		
 		ss.setComplete();
@@ -81,7 +87,7 @@ public class LoginController {
 	 * 관리자 로그인 페이지 이동
 	 * @return
 	 */
-	@RequestMapping(value = "/login/admin_login.do", method = GET)
+	@GetMapping(value = "/login/admin_login.do")
 	public String adminLoginForm() {
 		
 		return "prj3/login/admin_login";
@@ -93,7 +99,7 @@ public class LoginController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/login/AdminloginTry.do", method = POST)
+	@PostMapping(value = "/login/AdminloginTry.do")
 	public String adminLoginProcess(AdminLoginVO alVO, Model model) {
 		
 		String url = "";
@@ -106,16 +112,16 @@ public class LoginController {
 		}else {			
 			String adminId = alid.getAdmin_id();
 			model.addAttribute("adminId", adminId);//session
-			url = "prj3/admin/admin_main";
+			url = "forward:/admin/admin_main.do";
 		}	
 		return url;
 	}
 	
 	/**
-	 * 회원가입
+	 * 회원가입 이동
 	 * @return
 	 */
-	@RequestMapping(value = "/login/join.do", method = GET)
+	@GetMapping(value = "/login/join.do")
 	public String joinForm() {
 		
 		return "prj3/login/join";
@@ -128,7 +134,7 @@ public class LoginController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/login/join_success.do", method = POST)
+	@PostMapping(value = "/login/join_success.do")
 	public String joinSuccessProcess(MemberVO mVO, Model model) {
 		
 		int cnt = 0;
@@ -151,7 +157,7 @@ public class LoginController {
 	 * 아이디 찾기 페이지 이동
 	 * @return
 	 */
-	@RequestMapping(value = "/login/id_find.do", method = GET)
+	@GetMapping(value = "/login/id_find.do")
 	public String idFindForm() {
 
 		return "prj3/login/id_find_form";
@@ -161,7 +167,7 @@ public class LoginController {
 	 * 비밀번호 찾기 페이지 이동 
 	 * @return
 	 */
-	@RequestMapping(value = "/login/pw_find.do", method = GET)
+	@GetMapping(value = "/login/pw_find.do")
 	public String pwFindForm() {
 
 		return "prj3/login/pw_find_form";
@@ -171,17 +177,17 @@ public class LoginController {
 	 * 마이페이지(회원 정보 출력)
 	 * @return
 	 */
-	@RequestMapping(value = "/login/member.do", method = GET)
+	@GetMapping(value = "/login/member.do")
 	public String memberForm(HttpSession ss, Model model) {
 		
 		String url ="";
 		
-		 if(ss.getAttribute("id") == null) { 
-			 url = "prj3/login/login"; 
+		 if(ss.getAttribute("id") == null) {
+			 url = "prj3/login/login";
 		 }else {
-			 MemberSearchDomain msd = new MemberSearchDomain();
-			 msd = ms.searchMemberInfo((String)ss.getAttribute("id"));
-			 model.addAttribute("memberInfo",msd);
+			 //Object형으로 업캐스팅을 했으므로, 가져올 땐 원래대로 다운캐스팅
+			 MemberSearchDomain msd = ms.searchMemberInfo((String)ss.getAttribute("id"));
+			 model.addAttribute("memberInfo", msd);
 			 url = "prj3/login/member";
 		 } 
 		 return url;
@@ -191,8 +197,9 @@ public class LoginController {
 	 * 비밀번호 변경 페이지 이동
 	 * @return
 	 */
-	@RequestMapping(value = "/login/password.do", method = GET)
+	@GetMapping(value = "/login/password.do")
 	public String memberPwForm(HttpSession ss) {
+		
 		ss.getAttribute("id");
 		return "prj3/login/password";
 	}
@@ -204,14 +211,15 @@ public class LoginController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/login/password_update.do", method = POST)
+	@PostMapping(value = "/login/password_update.do")
 	public String memberPwProcess(String id, PasswordUpdateVO puVO, Model model) {
+		
 		int cnt = 0;
 		String url ="";
 		
 		puVO.setMember_id(id);
 
-		cnt = ms.modifyPassword(puVO);	
+		cnt = ms.modifyPassword(puVO);
 		
 		if(cnt == 1) {
 			model.addAttribute("success","success");
@@ -229,9 +237,8 @@ public class LoginController {
 	 * @param member_withdrawal
 	 * @return
 	 */
-	@RequestMapping(value = "login/withdrawal_process.do")
+	@GetMapping(value = "login/withdrawal_process.do")
 	public String removeMemberProcess(String member_id, Model model) {
-		
 		int cnt=0;
 		String url ="";
 
@@ -250,20 +257,20 @@ public class LoginController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/login/idDup.do")
+	@GetMapping(value = "/login/idDup.do")
 	public String searchIdDup(String MEMBER_ID, Model model) {
 		boolean dupFlag = false;
-		String msg ="";
+		String msg = null;
 
 		dupFlag = ms.searchIdDup(MEMBER_ID);
 		
 		if(dupFlag == true) {
-			msg=MEMBER_ID+"는 이미 존재하는 아이디 입니다. 다른 아이디를 입력해주세요.";
-			model.addAttribute("dup",msg);
+			msg = MEMBER_ID + "는 이미 존재하는 아이디 입니다. 다른 아이디를 입력해주세요.";
+			model.addAttribute("dup", msg);
 
 		}else {
-			msg=MEMBER_ID+"는 사용가능 합니다. 사용하시겠습니까?<a href=\"#void\"onclick=\"useId('"+MEMBER_ID+"')\">사용";
-			model.addAttribute("dup",msg);
+			msg = MEMBER_ID + "는 사용가능 합니다. 사용하시겠습니까?<a href=\"#void\"onclick=\"useId('"+MEMBER_ID+"')\">사용";
+			model.addAttribute("dup", msg);
 		}
 		return "prj3/login/process/id_check_text";
 	}
@@ -274,17 +281,15 @@ public class LoginController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/login/idSearch.do", method = POST)
+	@PostMapping(value = "/login/idSearch.do")
 	public String SearchId(SearchIdVO sIVO, Model model) {
-		IdFindDomain ifd = new IdFindDomain();
-		
-		ifd = ms.SearchId(sIVO);
+		IdFindDomain ifd = ms.SearchId(sIVO);
 		
 		if(ifd != null) { 
 			model.addAttribute("idFind",ifd);	
-			model.addAttribute("success","success");	
+			model.addAttribute("success","success");
 		}else {
-			model.addAttribute("fail","fail");			
+			model.addAttribute("fail","fail");
 		}
 		
 		return "prj3/login/id_find_form";
@@ -296,7 +301,7 @@ public class LoginController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/login/pwSearch.do", method = POST)
+	@PostMapping(value = "/login/pwSearch.do")
 	public String SearchPw(SearchPwVO sVO, Model model) {
 		
 		boolean passFlag = ms.SearchPw(sVO);
@@ -320,9 +325,8 @@ public class LoginController {
 			model.addAttribute("RandomPass",RandomPass);
 			
 		}else {
-			model.addAttribute("fail","fail");	
+			model.addAttribute("fail","fail");
 		}
-		
 		return "prj3/login/pw_find_form";
 	}
 	
@@ -332,7 +336,7 @@ public class LoginController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/login/memberUpdate.do", method = POST)
+	@PostMapping(value = "/login/memberUpdate.do")
 	public String modifyMember(MemberUpdateVO muVO, Model model) {
 		
 		int cnt = 0;
@@ -347,5 +351,4 @@ public class LoginController {
 		
 		return "prj3/login/member";
 	}
-		
 }

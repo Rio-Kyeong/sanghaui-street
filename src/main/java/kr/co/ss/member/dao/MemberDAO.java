@@ -17,13 +17,14 @@ import kr.co.ss.member.vo.SearchIdVO;
 import kr.co.ss.member.vo.SearchPwVO;
 
 @Repository
-public class MemberDAO {
+public class MemberDAO implements MemberDAOImp{
 	
 	/**
 	 * 회원가입
 	 * @param mVO
 	 * @return
 	 */
+	@Override
 	public int insertMember(MemberVO mVO) {
 		int rowCnt = 0;
 		
@@ -44,6 +45,7 @@ public class MemberDAO {
 	 * @param lVO
 	 * @return
 	 */
+	@Override
 	public LoginInfoDomain selectLogin(LoginVO lVO) {
 		
 		LoginInfoDomain lid = null;
@@ -52,7 +54,9 @@ public class MemberDAO {
 		
 		lid = ss.selectOne("kr.co.ss.member.memberMapper.selectLogin", lVO);
 		
-		if(ss != null ) { ss.close(); }
+		if(ss != null ) {
+			ss.close(); 
+		}
 		
 		return lid;
 	}
@@ -62,6 +66,7 @@ public class MemberDAO {
 	 * @param alVO
 	 * @return
 	 */
+	@Override
 	public AdminLoginInfoDomain selectAdminLogin(AdminLoginVO alVO) {
 		
 		AdminLoginInfoDomain alid = null;
@@ -82,6 +87,7 @@ public class MemberDAO {
 	 * @param id
 	 * @return
 	 */
+	@Override
 	public MemberSearchDomain selectMemberInfo(String id){
 		MemberSearchDomain msd = new MemberSearchDomain();
 		
@@ -99,6 +105,7 @@ public class MemberDAO {
 	 * @param puVO
 	 * @return
 	 */
+	@Override
 	public int updatePassword(PasswordUpdateVO puVO) {
 		int cnt =0;
 		
@@ -119,6 +126,7 @@ public class MemberDAO {
 	 * @param puVO
 	 * @return
 	 */
+	@Override
 	public int deleteMember(String member_id) {
 		int cnt =0;
 		
@@ -140,6 +148,7 @@ public class MemberDAO {
 	 * @param idCk
 	 * @return
 	 */
+	@Override
 	public String selectDupId(String idCk){
 		String member_id = "";
 		
@@ -157,6 +166,7 @@ public class MemberDAO {
 	 * @param sIVO
 	 * @return
 	 */
+	@Override
 	public IdFindDomain selectSearchId(SearchIdVO sIVO) {
 		IdFindDomain ifd = new IdFindDomain();
 		
@@ -172,6 +182,7 @@ public class MemberDAO {
 	 * @param sVO
 	 * @return
 	 */
+	@Override
 	public String selectSearchPw(SearchPwVO sVO) {
 		String pass = "";
 		
@@ -187,6 +198,7 @@ public class MemberDAO {
 	 * @param muVO
 	 * @return
 	 */
+	@Override
 	public int updateMember(MemberUpdateVO muVO) {
 		int cnt = 0;
 		
@@ -200,5 +212,4 @@ public class MemberDAO {
 		
 		return cnt;
 	}
-
 }

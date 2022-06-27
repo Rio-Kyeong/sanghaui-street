@@ -2,10 +2,13 @@ package kr.co.ss.product.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import kr.co.ss.product.dao.ProductDAO;
 import kr.co.ss.product.domain.ProductDetailUserDomain;
 import kr.co.ss.product.domain.ProductListUserDomain;
 
+@Service
 public class ProductService {
 
 	/**

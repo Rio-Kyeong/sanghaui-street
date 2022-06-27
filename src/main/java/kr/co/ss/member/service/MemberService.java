@@ -201,9 +201,7 @@ public class MemberService {
 	 */
 	public int modifyMember(MemberUpdateVO muVO) {
 		
-		int cnt = 0;
-		
-		cnt = mDAO.updateMember(muVO);
+		int cnt = mDAO.updateMember(muVO);
 		
 		return cnt;
 	}

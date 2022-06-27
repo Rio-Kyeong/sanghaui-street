@@ -15,8 +15,4 @@
   <bean id="uploadPath" class="java.lang.String">
     <constructor-arg value="C:/dev/workspace/team_prj3/src/main/webapp/resources/upload/"/>
   </bean>
-  
-  
-		
-		
 </beans>

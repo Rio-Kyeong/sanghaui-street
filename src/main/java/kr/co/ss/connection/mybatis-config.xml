@@ -22,10 +22,8 @@
     <mapper resource="kr/co/ss/lookbook/mapper/lookbookDetailMapper.xml"/>
     <mapper resource="kr/co/ss/lookbook/mapper/lookbookMainMapper.xml"/>
     <mapper resource="kr/co/ss/lookbook/mapper/lookbookMapper.xml"/>
-    
 	<mapper resource="kr/co/ss/order/mapper/orderMapper.xml"/>
     <mapper resource="kr/co/ss/product/mapper/productDetailUserMapper.xml"/>
     <mapper resource="kr/co/ss/product/mapper/productListUserMapper.xml"/>
-   
   </mappers>
 </configuration>

@@ -138,7 +138,7 @@
 		var day = obj1.day.value;
 		obj1.member_birth.value = year+month+day;
 		
-		obj1.submit();	
+		obj1.submit();
 	}
 	
 	function idCheck(){

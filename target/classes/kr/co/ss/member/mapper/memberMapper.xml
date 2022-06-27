@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.ss.member.memberMapper">
 
   	<!-- 회원가입 -->
 	<insert id="insertMember" parameterType="kr.co.ss.member.vo.MemberVO">
 		insert into MEMBER(MEMBER_ID, MEMBER_PW, MEMBER_NAME, MEMBER_PHONE, MEMBER_ZIPCODE, MEMBER_ADDR, MEMBER_EMAIL, MEMBER_GENDER, MEMBER_BIRTH, MEMBER_SIGN_DATE, MEMBER_WITHDRAWAL, MEMBER_DETAILED_ADDR)
 		values( #{member_id}, #{member_pw}, #{member_name}, #{member_phone}, #{member_zipcode}, #{member_addr}, #{member_email}, #{member_gender}, #{member_birth}, to_char(sysdate, 'yyyy-mm-dd'), 'N', #{member_detailedAddr})
-	</insert> 	
-		
+	</insert>
+
 	<!-- 로그인 -->
 	<select id="selectLogin" parameterType="kr.co.ss.member.vo.LoginVO" resultType="kr.co.ss.member.domain.LoginInfoDomain">
 		select MEMBER_ID, MEMBER_WITHDRAWAL from MEMBER where MEMBER_ID = #{ member_id } and MEMBER_PW = #{ member_pw }
@@ -64,8 +63,4 @@
 		from MEMBER 
 		where MEMBER_ID= #{ member_id } and MEMBER_NAME = #{ member_name } and MEMBER_EMAIL = #{ member_email }
 	</select>
-	
-	
-	
-	
 </mapper>
