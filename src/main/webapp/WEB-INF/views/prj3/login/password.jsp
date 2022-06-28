@@ -193,8 +193,15 @@ function chkNull(){
 			</div>	
 			<strong id = "pw">비밀번호설정</strong>
 			<div id= join_pw>
-				<form action="http://localhost/ss/login/password_update.do?id=${ id }" method="post" name ="passFrm" id="passFrm">
+				<form action="http://localhost/ss/login/password_update.do" method="post" name ="passFrm" id="passFrm">
 					<table>
+						<tr>
+							<th>&emsp;아이디<span style="color: red"> *</span></th>
+							<td>
+								 <input type="text" class="form-control text" maxlength="16"  id ="id" name ="member_id" value="${ id }" readonly="readonly">
+								 <span class="explain">(영문 소문자/숫자, 4~16자)</span>
+							</td>
+						</tr>
 						<tr>
 							<th>&emsp;비밀번호</th>
 							<td>

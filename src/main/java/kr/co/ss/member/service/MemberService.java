@@ -22,9 +22,13 @@ import kr.co.ss.member.vo.SearchPwVO;
 @Service
 public class MemberService {
 	
-	@Autowired
-	private MemberDAO mDAO;
+	private final MemberDAO mDAO;
 	
+	@Autowired
+	public MemberService(MemberDAO mDAO) {
+		this.mDAO = mDAO;
+	}
+
 	/**
 	 * 회원가입
 	 * @param mVO
@@ -34,7 +38,8 @@ public class MemberService {
 		int cnt = 0;
 		
 		try {
-			mVO.setMember_pw(DataEncrypt.messageDigest("MD5", mVO.getMember_pw()));
+			String pw = DataEncrypt.messageDigest("MD5", mVO.getMember_pw());
+			mVO.setMember_pw(pw);
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		} 
@@ -52,7 +57,8 @@ public class MemberService {
 		LoginInfoDomain lid = null;
 		
 		try {
-			lVO.setMember_pw(DataEncrypt.messageDigest("MD5", lVO.getMember_pw()));
+			String pw = DataEncrypt.messageDigest("MD5", lVO.getMember_pw());
+			lVO.setMember_pw(pw);
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		}
@@ -70,7 +76,8 @@ public class MemberService {
 		AdminLoginInfoDomain alid = null;
 		
 		try {
-			alVO.setAdmin_pw(DataEncrypt.messageDigest("MD5", alVO.getAdmin_pw()));
+			String pw =  DataEncrypt.messageDigest("MD5", alVO.getAdmin_pw());
+			alVO.setAdmin_pw(pw);
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		}
@@ -101,7 +108,8 @@ public class MemberService {
 		int cnt = 0;
 		
 		try {
-			puVO.setMember_pw(DataEncrypt.messageDigest("MD5", puVO.getMember_pw()));
+			String pw = DataEncrypt.messageDigest("MD5", puVO.getMember_pw());
+			puVO.setMember_pw(pw);
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		}

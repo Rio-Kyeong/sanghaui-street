@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import kr.co.ss.product.domain.ProductListUserDomain;
 import kr.co.ss.product.service.ProductService;
@@ -13,14 +13,14 @@ import kr.co.ss.product.service.ProductService;
 @Controller
 public class MainController {
 	
-	ProductService ps;
+	private final ProductService ps;
 	
 	@Autowired
 	public MainController(ProductService ps) {
 		this.ps = ps;
 	}
-
-	@RequestMapping(value = "/main/main_all.do")
+	
+	@GetMapping(value = "/main/main_all.do")
 	public String mainForm(Model model) {
 		List<ProductListUserDomain> topList = ps.selectProductListTopUser();
 		model.addAttribute("topList", topList);

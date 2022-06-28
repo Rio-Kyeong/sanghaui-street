@@ -30,7 +30,7 @@
 		$("#checkBt").click(function(){
 			$.ajax({
 				url:"http://localhost/ss/login/idDup.do",
-				data: "MEMBER_ID="+$("#MEMBER_ID").val(),
+				data: "id="+$("#id").val(),
 				dayaType:"text",
 				type:"get",
 				error:function(xhr){
@@ -44,8 +44,8 @@
 		})
 	})	
 
-	function useId( MEMBER_ID ){
-		opener.window.document.joinFrm.id.value = MEMBER_ID;
+	function useId( id ){
+		opener.window.document.joinFrm.id.value = id;
 		self.close();	
 	}
 	
@@ -58,7 +58,7 @@
 			<p>사용하고자 하는 아이디를 입력해주세요.<br/>
 			아이디 중복확인 후 사용 가능한 아이디로 선택하시면 됩니다.</p>
 			<div id="inputDiv">
-				<input type="text" name ="MEMBER_ID" id ="MEMBER_ID" class="form-control text" maxlength="16"/>
+				<input type="text" name ="id" id ="id" class="form-control text" maxlength="16"/>
 				<input type="button" value="ID 중복확인" name ="checkBt" id ="checkBt"  class="btn btn-default btn-lg" />
 			</div>
 				<div id="reqDiv"></div>

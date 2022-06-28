@@ -151,7 +151,7 @@ function loginFail() {
 				<div id=login_font><p>ADMIN LOGIN</p>홈 > 관리자</div>
 			<div id = login_wrap>
 				<div id="login_header">SANGHAUI STREET</div><br/>
-				<form action="http://localhost/ss/login/AdminloginTry.do" method="post" name ="loginFrm" id="loginFrm">
+				<form action="http://localhost/ss/login/AdminloginTry.do" method="get" name ="loginFrm" id="loginFrm">
 				<div id= login_container>
 					<label>
 						<span id = "spanId">아이디</span>

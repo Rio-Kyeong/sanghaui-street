@@ -1,23 +1,11 @@
 package kr.co.ss.member.vo;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+
+@EqualsAndHashCode
+@Getter
 public class MemberDeleteVO {
-	private String member_id, member_withdrawal;
-
-	public String getMember_id() {
-		return member_id;
-	}
-
-	public void setMember_id(String member_id) {
-		this.member_id = member_id;
-	}
-
-	public String getMember_withdrawal() {
-		return member_withdrawal;
-	}
-
-	public void setMember_withdrawal(String member_withdrawal) {
-		this.member_withdrawal = member_withdrawal;
-	}
-	
-	
+	private String member_id;
+	private String member_withdrawal;
 }

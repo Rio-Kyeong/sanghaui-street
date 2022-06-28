@@ -178,7 +178,7 @@ window.onload = function(){
 	
 	function withdrawal(){
 		 if( confirm("회원탈퇴를 진행하시겠습니까?") ){
-			location.href="http://localhost/ss/login/withdrawal_process.do?member_id=${ id }" 
+			location.href="http://localhost/ss/login/withdrawal_process.do?id=${ id }" 
 		 }
 	}
 	
@@ -305,7 +305,7 @@ window.onload = function(){
 								<input type ="button" value="우편번호" class="btn btn-default zipBt" id="btnZipcode"/><br/><br/>
 								 <input type="text" class="form-control text addr"   id="addr1" name="member_addr" value="${ memberInfo.member_addr }">
 								 <span class="explain">상세주소</span><br/>
-								 <input type="text" class="form-control text addr" id="addr2" name="member_detailed_Addr" value="${ memberInfo.member_detailedAddr }">
+								 <input type="text" class="form-control text addr" id="addr2" name="member_detailed_addr" value="${ memberInfo.member_detailed_addr }">
 							</td>
 						</tr>
 						<tr>

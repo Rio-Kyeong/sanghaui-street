@@ -119,24 +119,22 @@
 			<div class = main_con >
 				<div id = login_wrap>
 					<form name = "check">
-					<div id =imgDiv>
-						<img id ="imgV" src="http://localhost/ss/common/popup_img/red_v.PNG" alt="img_fail" >
-					</div>
-					<div id ="mainFont">
-						<h4>회원가입도중 오류가 발생하였습니다.</h4>
-						<p>다시 시도해주세요.</p>
-						<div id="line"></div><br/>
-					</div>
-				<div id = "btDiv">
-					<button type="button" class="btn btn-default btn-lg" style="margin-right: 10px; font-size: 20px" onclick="home()">홈으로</button>
-					<button type="button" class="btn btn-danger btn-lg" style="font-size: 20px" onclick="login()">로그인</button>
-				</div>
-		</form>
-
+						<div id =imgDiv>
+							<img id ="imgV" src="http://localhost/ss/common/popup_img/red_v.PNG" alt="img_fail" >
+						</div>
+						<div id ="mainFont">
+							<h4>회원가입도중 오류가 발생하였습니다.</h4>
+							<p>다시 시도해주세요.</p>
+							<div id="line"></div><br/>
+						</div>
+						<div id = "btDiv">
+							<button type="button" class="btn btn-default btn-lg" style="margin-right: 10px; font-size: 20px" onclick="home()">홈으로</button>
+							<button type="button" class="btn btn-danger btn-lg" style="font-size: 20px" onclick="login()">로그인</button>
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>
-	
 		<footer>
 			<div class="footer-wrap">
             <div class="footer-content">

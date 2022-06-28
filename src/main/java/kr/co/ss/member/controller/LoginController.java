@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
@@ -29,7 +29,7 @@ import javax.servlet.http.HttpSession;
 @SessionAttributes({"id","adminId"})
 public class LoginController {
 	
-	private MemberService ms;
+	private final MemberService ms;
 	
 	@Autowired
 	public LoginController(MemberService ms) {
@@ -50,14 +50,12 @@ public class LoginController {
 	 * 로그인
 	 * @return
 	 */
-	@PostMapping(value="/login/loginTry.do")
-	public String loginProcess(LoginVO lVO, Model model) {
+	@GetMapping(value = "/login/loginTry.do")
+	public String loginProcess(@ModelAttribute LoginVO lVO, Model model) {
 		
 		String url = "";
 
-		LoginInfoDomain lid = new LoginInfoDomain();
-		
-		lid = ms.searchLogin(lVO);
+		LoginInfoDomain lid = ms.searchLogin(lVO);
 
 		if(lid == null || lid.getMember_withdrawal().equals("Y")){
 			model.addAttribute("loginFail","loginFail"); //만약 login 정보가 없거나 탈퇴 정보가 Y이면
@@ -99,8 +97,8 @@ public class LoginController {
 	 * @param model
 	 * @return
 	 */
-	@PostMapping(value = "/login/AdminloginTry.do")
-	public String adminLoginProcess(AdminLoginVO alVO, Model model) {
+	@GetMapping(value = "/login/AdminloginTry.do")
+	public String adminLoginProcess(@ModelAttribute AdminLoginVO alVO, Model model) {
 		
 		String url = "";
 
@@ -135,14 +133,14 @@ public class LoginController {
 	 * @return
 	 */
 	@PostMapping(value = "/login/join_success.do")
-	public String joinSuccessProcess(MemberVO mVO, Model model) {
+	public String joinSuccessProcess(@ModelAttribute MemberVO mVO, Model model) {
 		
 		int cnt = 0;
 		String url = "";
 		
 		model.addAttribute("name", mVO.getMember_name());
 		model.addAttribute("id", mVO.getMember_id());
-		
+
 		cnt = ms.addMember(mVO);
 		
 		if(cnt == 1) {
@@ -212,13 +210,11 @@ public class LoginController {
 	 * @return
 	 */
 	@PostMapping(value = "/login/password_update.do")
-	public String memberPwProcess(String id, PasswordUpdateVO puVO, Model model) {
+	public String memberPwProcess(@ModelAttribute PasswordUpdateVO puVO, Model model) {
 		
 		int cnt = 0;
 		String url ="";
 		
-		puVO.setMember_id(id);
-
 		cnt = ms.modifyPassword(puVO);
 		
 		if(cnt == 1) {
@@ -238,16 +234,15 @@ public class LoginController {
 	 * @return
 	 */
 	@GetMapping(value = "login/withdrawal_process.do")
-	public String removeMemberProcess(String member_id, Model model) {
+	public String removeMemberProcess(@RequestParam(value = "id") String id, Model model) {
 		int cnt=0;
 		String url ="";
 
-		cnt = ms.removeMember(member_id);
+		cnt = ms.removeMember(id);
 		if(cnt == 1) {
 			model.addAttribute("withdrawal","withdrawal");
 			url = "prj3/login/member";
 		}
-		
 		return url;
 	}
 	
@@ -258,18 +253,18 @@ public class LoginController {
 	 * @return
 	 */
 	@GetMapping(value = "/login/idDup.do")
-	public String searchIdDup(String MEMBER_ID, Model model) {
+	public String searchIdDup(@RequestParam(value = "id") String id, Model model) {
 		boolean dupFlag = false;
 		String msg = null;
 
-		dupFlag = ms.searchIdDup(MEMBER_ID);
+		dupFlag = ms.searchIdDup(id);
 		
 		if(dupFlag == true) {
-			msg = MEMBER_ID + "는 이미 존재하는 아이디 입니다. 다른 아이디를 입력해주세요.";
+			msg = id + "는 이미 존재하는 아이디 입니다. 다른 아이디를 입력해주세요.";
 			model.addAttribute("dup", msg);
 
 		}else {
-			msg = MEMBER_ID + "는 사용가능 합니다. 사용하시겠습니까?<a href=\"#void\"onclick=\"useId('"+MEMBER_ID+"')\">사용";
+			msg = id + "는 사용가능 합니다. 사용하시겠습니까?<a href=\"#void\"onclick=\"useId('"+ id +"')\">사용";
 			model.addAttribute("dup", msg);
 		}
 		return "prj3/login/process/id_check_text";
@@ -282,7 +277,7 @@ public class LoginController {
 	 * @return
 	 */
 	@PostMapping(value = "/login/idSearch.do")
-	public String SearchId(SearchIdVO sIVO, Model model) {
+	public String SearchId(@ModelAttribute SearchIdVO sIVO, Model model) {
 		IdFindDomain ifd = ms.SearchId(sIVO);
 		
 		if(ifd != null) { 
@@ -302,7 +297,7 @@ public class LoginController {
 	 * @return
 	 */
 	@PostMapping(value = "/login/pwSearch.do")
-	public String SearchPw(SearchPwVO sVO, Model model) {
+	public String SearchPw(@ModelAttribute SearchPwVO sVO, Model model) {
 		
 		boolean passFlag = ms.SearchPw(sVO);
 		String RandomPass = ms.addRandomPw(passFlag);
@@ -311,6 +306,7 @@ public class LoginController {
 			
 			// 회원정보(이름,이메일)저장 POJO Class
 			SearchIdVO sIVO = new SearchIdVO();
+			
 			sIVO.setMember_name(sVO.getMember_name());
 			sIVO.setMember_email(sVO.getMember_email());
 			
@@ -337,7 +333,7 @@ public class LoginController {
 	 * @return
 	 */
 	@PostMapping(value = "/login/memberUpdate.do")
-	public String modifyMember(MemberUpdateVO muVO, Model model) {
+	public String modifyMember(@ModelAttribute MemberUpdateVO muVO, Model model) {
 		
 		int cnt = 0;
 		
@@ -347,8 +343,7 @@ public class LoginController {
 			model.addAttribute("success","success");
 		}else {
 			model.addAttribute("fail","fail");			
-		}
-		
+		}		
 		return "prj3/login/member";
 	}
 }

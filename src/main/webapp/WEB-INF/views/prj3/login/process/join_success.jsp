@@ -118,20 +118,19 @@
 			<div class = main_con >
 				<div id = login_wrap>
 					<form name = "check">
-					<div id =imgDiv>
-						<img id ="imgV" src="http://localhost/ss/common/popup_img/green_v.PNG" alt="img_fail" >
-					</div>
-					<div id ="mainFont">
-						<h4><strong style="font-size: 40px"><c:out value="${ name }"/></strong>님의 회원가입을 축하합니다.</h4>
-						<p>가입하신 ID는<span id ="span"><c:out value="${ id }"/></span>입니다.</p>
-						<div id="line"></div><br/>
-					</div>
-				<div id = "btDiv">
-					<button type="button" class="btn btn-default btn-lg" style="margin-right: 10px; font-size: 20px" onclick="home()">홈으로</button>
-					<button type="button" class="btn btn-success btn-lg" style="font-size: 20px" onclick="login()">로그인</button>
-				</div>
-		</form>
-
+						<div id =imgDiv>
+							<img id ="imgV" src="http://localhost/ss/common/popup_img/green_v.PNG" alt="img_fail" >
+						</div>
+						<div id ="mainFont">
+							<h4><strong style="font-size: 40px"><c:out value="${ name }"/></strong>님의 회원가입을 축하합니다.</h4>
+							<p>가입하신 ID는<span id ="span"><c:out value="${ id }"/></span>입니다.</p>
+							<div id="line"></div><br/>
+						</div>
+						<div id = "btDiv">
+							<button type="button" class="btn btn-default btn-lg" style="margin-right: 10px; font-size: 20px" onclick="home()">홈으로</button>
+							<button type="button" class="btn btn-success btn-lg" style="font-size: 20px" onclick="login()">로그인</button>
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>

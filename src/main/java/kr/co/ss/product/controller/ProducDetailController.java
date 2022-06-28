@@ -22,15 +22,14 @@ public class ProducDetailController {
 		//System.out.println(prod_num);
 		String url = "";
 		String id = (String) ss.getAttribute("id");
+		
 		ProductService ps = new ProductService();
 		
 		model.addAttribute("prodList", ps.selectProductDetailUser(prod_num));
+		
 		if(id != null) {
-			
 			model.addAttribute("id", id);
 		}
-		
-		
 		
 		url = "prj3/product/prod_detail"; 
 
