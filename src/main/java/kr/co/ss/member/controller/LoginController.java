@@ -14,7 +14,7 @@ import kr.co.ss.member.domain.AdminLoginInfoDomain;
 import kr.co.ss.member.domain.IdFindDomain;
 import kr.co.ss.member.domain.LoginInfoDomain;
 import kr.co.ss.member.domain.MemberSearchDomain;
-import kr.co.ss.member.service.MemberService;
+import kr.co.ss.member.service.MemberServiceImp;
 import kr.co.ss.member.vo.AdminLoginVO;
 import kr.co.ss.member.vo.LoginVO;
 import kr.co.ss.member.vo.MemberUpdateVO;
@@ -29,10 +29,10 @@ import javax.servlet.http.HttpSession;
 @SessionAttributes({"id","adminId"})
 public class LoginController {
 	
-	private final MemberService ms;
+	private final MemberServiceImp ms;
 	
 	@Autowired
-	public LoginController(MemberService ms) {
+	public LoginController(MemberServiceImp ms) {
 		this.ms = ms;
 	}
 
@@ -235,6 +235,7 @@ public class LoginController {
 	 */
 	@GetMapping(value = "login/withdrawal_process.do")
 	public String removeMemberProcess(@RequestParam(value = "id") String id, Model model) {
+		
 		int cnt=0;
 		String url ="";
 
@@ -254,6 +255,7 @@ public class LoginController {
 	 */
 	@GetMapping(value = "/login/idDup.do")
 	public String searchIdDup(@RequestParam(value = "id") String id, Model model) {
+		
 		boolean dupFlag = false;
 		String msg = null;
 
@@ -278,6 +280,7 @@ public class LoginController {
 	 */
 	@PostMapping(value = "/login/idSearch.do")
 	public String SearchId(@ModelAttribute SearchIdVO sIVO, Model model) {
+		
 		IdFindDomain ifd = ms.SearchId(sIVO);
 		
 		if(ifd != null) { 
@@ -299,29 +302,13 @@ public class LoginController {
 	@PostMapping(value = "/login/pwSearch.do")
 	public String SearchPw(@ModelAttribute SearchPwVO sVO, Model model) {
 		
-		boolean passFlag = ms.SearchPw(sVO);
-		String RandomPass = ms.addRandomPw(passFlag);
+		String RandomPass = ms.SearchPw(sVO);
 		
-		if(passFlag == true) {
-			
-			// 회원정보(이름,이메일)저장 POJO Class
-			SearchIdVO sIVO = new SearchIdVO();
-			
-			sIVO.setMember_name(sVO.getMember_name());
-			sIVO.setMember_email(sVO.getMember_email());
-			
-			IdFindDomain ifd = ms.SearchId(sIVO);
-			
-			PasswordUpdateVO puVO = new PasswordUpdateVO();
-			puVO.setMember_id(ifd.getMember_id());
-			puVO.setMember_pw(RandomPass);
-			ms.modifyPassword(puVO);
-			
-			model.addAttribute("success","success");
-			model.addAttribute("RandomPass",RandomPass);
-			
+		if(RandomPass.isEmpty()) {
+			model.addAttribute("fail", "fail");
 		}else {
-			model.addAttribute("fail","fail");
+			model.addAttribute("success", "success");
+			model.addAttribute("RandomPass", RandomPass);
 		}
 		return "prj3/login/pw_find_form";
 	}

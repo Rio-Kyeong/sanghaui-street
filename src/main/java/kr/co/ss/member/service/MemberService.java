@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.sist.util.cipher.DataEncrypt;
-import kr.co.ss.member.dao.MemberDAO;
+import kr.co.ss.member.dao.MemberDAOImp;
 import kr.co.ss.member.domain.AdminLoginInfoDomain;
 import kr.co.ss.member.domain.IdFindDomain;
 import kr.co.ss.member.domain.LoginInfoDomain;
@@ -20,12 +20,13 @@ import kr.co.ss.member.vo.SearchIdVO;
 import kr.co.ss.member.vo.SearchPwVO;
 
 @Service
-public class MemberService {
+public class MemberService implements MemberServiceImp{
 	
-	private final MemberDAO mDAO;
+	// MemberDAO 인터페이스 의존
+	private final MemberDAOImp mDAO;
 	
 	@Autowired
-	public MemberService(MemberDAO mDAO) {
+	public MemberService(MemberDAOImp mDAO) {
 		this.mDAO = mDAO;
 	}
 
@@ -34,6 +35,7 @@ public class MemberService {
 	 * @param mVO
 	 * @return
 	 */
+	@Override
 	public int addMember(MemberVO mVO) {
 		int cnt = 0;
 		
@@ -53,6 +55,7 @@ public class MemberService {
 	 * @param lVO
 	 * @return
 	 */
+	@Override
 	public LoginInfoDomain searchLogin(LoginVO lVO) {
 		LoginInfoDomain lid = null;
 		
@@ -72,6 +75,7 @@ public class MemberService {
 	 * @param alVO
 	 * @return
 	 */
+	@Override
 	public AdminLoginInfoDomain searchAdminLogin(AdminLoginVO alVO) {
 		AdminLoginInfoDomain alid = null;
 		
@@ -91,6 +95,7 @@ public class MemberService {
 	 * @param id
 	 * @return
 	 */
+	@Override
 	public MemberSearchDomain searchMemberInfo(String id){
 		MemberSearchDomain msd = new MemberSearchDomain();
 		
@@ -104,6 +109,7 @@ public class MemberService {
 	 * @param puVO
 	 * @return
 	 */
+	@Override
 	public int modifyPassword(PasswordUpdateVO puVO) {
 		int cnt = 0;
 		
@@ -123,6 +129,7 @@ public class MemberService {
 	 * @param mdVO
 	 * @return
 	 */
+	@Override
 	public int removeMember(String member_id) {
 		int cnt = 0;
 
@@ -136,6 +143,7 @@ public class MemberService {
 	 * @param id
 	 * @return
 	 */
+	@Override
 	public boolean searchIdDup(String idCk) {
 		boolean dupFlag = true;
 		String member_id = "";
@@ -153,6 +161,7 @@ public class MemberService {
 	 * @param sVO
 	 * @return
 	 */
+	@Override
 	public IdFindDomain SearchId(SearchIdVO sIVO) {
 		IdFindDomain ifd = new IdFindDomain();
 
@@ -162,43 +171,58 @@ public class MemberService {
 	}
 	
 	/**
-	 *	비밀번호 찾기(랜덤 비밀번호에 넣을 boolean값 생성)
+	 * 비밀번호 찾기(랜덤 비밀번호에 넣을 boolean값 생성)
 	 * @param sVO
 	 * @return
 	 */
-	public boolean SearchPw(SearchPwVO sVO) {
-		String pass = "";
-		boolean passFlag = false;
-
-		pass = mDAO.selectSearchPw(sVO);
+	@Override
+	public String SearchPw(SearchPwVO sVO) {
 		
-		if(pass != null) {
-			passFlag = true;
+		String pass = mDAO.selectSearchPw(sVO);
+		
+		if(!pass.isEmpty()) { // 비밀번호 존재
+			
+			String RandomPass = addRandomPw(); // 랜덤 비밀번호 생성
+			
+			// 회원정보(이름,이메일)저장 POJO Class
+			SearchIdVO sIVO = new SearchIdVO();
+	
+			sIVO.setMember_name(sVO.getMember_name());
+			sIVO.setMember_email(sVO.getMember_email());
+			
+			// 아이디 찾기
+			IdFindDomain ifd = SearchId(sIVO);
+			
+			// 회원정보(아이디, 비밀번호)변경 POJO Class
+			PasswordUpdateVO puVO = new PasswordUpdateVO();
+			
+			puVO.setMember_id(ifd.getMember_id());
+			puVO.setMember_pw(RandomPass);
+			
+			// 비밀변호 변경
+			modifyPassword(puVO);
+			
+			return RandomPass;
 		}
-		return passFlag;
+		return null;
 	}
 	
 	/**
-	 * 랜덤비밀번호 생성
+	 * 랜덤비밀번호 생성 유틸 메서드
 	 * @param passFlag
 	 * @return
 	 */
-	public String addRandomPw(boolean passFlag){
+	public String addRandomPw(){
 		
 		StringBuffer TempraryPW = new StringBuffer();
 		
-		if(passFlag == true) {
-	
 		Random random = new Random();
-	
 		String chars[] = "A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,0,1,2,3,4,5,6,7,8,9".split(",");
-	
+
 		for (int i = 0; i < 4; i++) {
-	
 			TempraryPW.append(chars[random.nextInt(chars.length)]);
-			
 			}
-		}
+		
 		return TempraryPW.toString();
 	}
 	
@@ -207,6 +231,7 @@ public class MemberService {
 	 * @param muVO
 	 * @return
 	 */
+	@Override
 	public int modifyMember(MemberUpdateVO muVO) {
 		
 		int cnt = mDAO.updateMember(muVO);

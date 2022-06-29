@@ -47,7 +47,7 @@ function homeBt(){
 				<img src="http://localhost/ss/common/popup_img/green_v.PNG" alt="img_fail" >
 			</div>
 			<div id = "text">
-			<h4><strong style="font-size: 25px"><c:out value="${ id }"/></strong>님의 비벌번호 수정이 완료되었습니다.</h4>
+			<h4><strong style="font-size: 25px"><c:out value="${ id }"/></strong>님의 비밀번호 수정이 완료되었습니다.</h4>
 			</div>
 			<div id="line"></div><br/>
 				<div id = "btDiv">
