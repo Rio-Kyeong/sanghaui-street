@@ -171,7 +171,7 @@ public class MemberService implements MemberServiceImp{
 	}
 	
 	/**
-	 * 비밀번호 찾기(랜덤 비밀번호에 넣을 boolean값 생성)
+	 * 비밀번호 찾기(랜덤 비밀번호 생성)
 	 * @param sVO
 	 * @return
 	 */

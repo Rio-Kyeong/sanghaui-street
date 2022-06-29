@@ -29,6 +29,7 @@ import javax.servlet.http.HttpSession;
 @SessionAttributes({"id","adminId"})
 public class LoginController {
 	
+	// MemberService 인터페이스 의존
 	private final MemberServiceImp ms;
 	
 	@Autowired
