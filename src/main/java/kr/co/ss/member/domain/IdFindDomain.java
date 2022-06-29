@@ -12,4 +12,4 @@ import lombok.Setter;
 public class  IdFindDomain{
 	private String member_id, member_name;
 	private String member_sign_Date;
-}//class
+}

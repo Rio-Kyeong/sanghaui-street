@@ -41,4 +41,4 @@ public class ProductService {
 		return pDAO.selectProductDetailUser(prod_num);
 	}//selectProductDetailUser
 	
-}//class
+}
